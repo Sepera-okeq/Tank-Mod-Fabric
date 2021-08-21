@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "trajantanks",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Tank Mod 1.17",
+  "description": "Mod for 1.17 Fabric adding working Tanks to Minecraft",
   "authors": [
-    "Me!"
+    "Crescentine/Trajan"
   ],
   "contact": {
     "homepage": "https://fabricmc.net/",
@@ -19,10 +19,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "com.crescentine.tankmod.TankMod"
     ],
     "client": [
-      "net.fabricmc.example.TankModClient"
+      "com.crescentine.tankmod.TankModClient"
     ]
   },
   "mixins": [
