@@ -3,12 +3,15 @@ package com.crescentine.tankmod;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.PigEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
@@ -118,8 +121,8 @@ public class TankEntity extends PigEntity implements IAnimatable {
 //Player can move wherever they want instead of Pig AI having control. Overrides method.
     @Override
     protected boolean movesIndependently() {
-        return true;
-    }
+            return true;
+        }
 //Overrides method so user can move wherever they want.More or less same as Previous method.
     @Override
     public boolean canMoveVoluntarily() {
@@ -135,7 +138,7 @@ public class TankEntity extends PigEntity implements IAnimatable {
     public Arm getMainArm() {
         return Arm.LEFT;
     }
-//Overrides method to control entity speed.
+//Overrides method to control entity speed
     @Override
     public float getSaddledSpeed() {
         return 0.15f;
@@ -157,10 +160,11 @@ public class TankEntity extends PigEntity implements IAnimatable {
         return null;
     }
 
+
     //When player right clicks they mount the entity by overriding the interact method of Pig Entity.
     @Override
     public ActionResult interactAt(PlayerEntity player, Vec3d hitPos, Hand hand) {
-        if (!player.getEntityWorld().isClient && player.getStackInHand(hand) == ItemStack.EMPTY && hand == Hand.MAIN_HAND) {
+        if (!player.getEntityWorld().isClient && player.getStackInHand(hand).getItem() == TankMod.TANK_CONTROLLER) {
             player.startRiding(this, true);
             player.setInvisible(true);
             return ActionResult.SUCCESS;
@@ -172,6 +176,31 @@ public class TankEntity extends PigEntity implements IAnimatable {
     @Override
     protected boolean isImmobile() {
         return false;
+    }
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return SoundEvents.ENTITY_MINECART_RIDING;
+    }
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.ENTITY_GENERIC_EXPLODE;
+    }
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return SoundEvents.ITEM_ARMOR_EQUIP_IRON;
+    }
+    @Override
+    protected SoundEvent getFallSound(int distance) {
+        return null;
+    }
+    @Override
+    protected SoundEvent getSplashSound() {
+        return null;
+    }
+
+    @Override
+    protected SoundEvent getSwimSound() {
+        return null;
     }
 
     }

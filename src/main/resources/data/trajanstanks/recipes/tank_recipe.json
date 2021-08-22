@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  #",
+    "FT#",
+    "NNN"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:netherite_block"
+    },
+    "F": {
+      "item": "minecraft:furnace"
+    },
+    "T": {
+      "item": "trajanstanks:tank_controller"
+    },
+    "N": {
+      "item": "trajanstanks:netherite_wheel"
+    }
+  },
+  "result": {
+    "item": "trajanstanks:tank_item",
+    "count": 1
+  }
+}
