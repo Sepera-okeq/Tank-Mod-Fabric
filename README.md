@@ -1,9 +1,9 @@
-# Fabric Example Mod
+# Trajan's Tanks (Fabric) 1.17
 
 ## Setup
 
-For setup instructions please see the [fabric wiki page](https://fabricmc.net/wiki/tutorial:setup) that relates to the IDE that you are using.
+Download the Required Dependencies (GeckoLib and Fabric API) and start playing the mod.
 
 ## License
 
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+This mod is lisensed under MIT lisense.
