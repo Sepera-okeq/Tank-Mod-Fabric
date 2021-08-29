@@ -21,7 +21,7 @@ public class TankMod implements ModInitializer {
 			Registry.ENTITY_TYPE,
 			new Identifier(TankMod.MOD_ID, "tank_shell"),
 			FabricEntityTypeBuilder.<ShellEntity>create(SpawnGroup.MISC, ShellEntity::new)
-					.dimensions(EntityDimensions.fixed(0.50F, 0.50F))
+					.dimensions(EntityDimensions.fixed(0.25F, 0.25F))
 					.trackRangeBlocks(4).trackedUpdateRate(10)
 					.build()
 	);
