@@ -1,5 +1,8 @@
 package com.crescentine.tankmod;
 
+import com.crescentine.tankmod.shell.ShellEntity;
+import com.crescentine.tankmod.shell.ShellItem;
+import com.crescentine.tankmod.tank.TankEntity;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -18,6 +21,16 @@ import net.minecraft.world.item.SpawnEggItem;
 import software.bernie.geckolib3.GeckoLib;
 
 public class TankMod implements ModInitializer {
+	public static final EntityType<ShellEntity> ShellEntityType = Registry.register(
+			Registry.ENTITY_TYPE,
+			new ResourceLocation(TankMod.MOD_ID, "tank_shell"),
+			FabricEntityTypeBuilder.<ShellEntity>create(MobCategory.MISC, ShellEntity::new)
+					.dimensions(EntityDimensions.fixed(0.25F, 0.25F))
+					.trackRangeBlocks(4).trackedUpdateRate(10)
+					.build()
+	);
+
+	public static final Item ShellEntityItem = new ShellItem(new Item.Properties().tab(CreativeModeTab.TAB_MISC).stacksTo(16));
 	public static final Item TANK_CONTROLLER = new Item(new FabricItemSettings().tab(CreativeModeTab.TAB_COMBAT));
 	public static final Item NETHERITE_WHEEL = new Item(new FabricItemSettings().tab(CreativeModeTab.TAB_MISC));
 	public static String MOD_ID = "trajanstanks";
@@ -36,6 +49,7 @@ public class TankMod implements ModInitializer {
 	@Override
 	public void onInitialize() {
 	Registry.register(Registry.ITEM, new ResourceLocation("trajanstanks", "tank_controller"), TANK_CONTROLLER);
+		Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "shell_item"), ShellEntityItem);
 		GeckoLib.initialize();
 		Registry.register(Registry.ENTITY_TYPE, TANK_ENTITY, TANK_ENTITY_TYPE);
 		FabricDefaultAttributeRegistry.register(TANK_ENTITY_TYPE, TankEntity.createTankAttributes());
