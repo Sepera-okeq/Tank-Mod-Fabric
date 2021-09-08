@@ -28,7 +28,6 @@ public class PlayerEntityMixin {
     @Nullable
     private Entity trajanstanks$vehicle;
     private ShellEntity trajanstanks$shellEntity;
-
     @Inject(at = @At("HEAD"), method =
             "tick")
     public void tick(CallbackInfo ci) {
