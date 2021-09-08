@@ -14,6 +14,7 @@ public class ShellItem extends Item {
     public ShellItem(Settings settings) {
         super(settings);
     }
+    /*
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
         world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.NEUTRAL, 0.5F, 1F);
@@ -31,5 +32,5 @@ public class ShellItem extends Item {
         }
 
         return TypedActionResult.success(itemStack, world.isClient());
-    }
+    } */
 }

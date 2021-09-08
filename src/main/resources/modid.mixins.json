@@ -4,7 +4,7 @@
   "package": "com.crescentine.tankmod.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-
+    "PlayerEntityMixin"
   ],
   "client": [
   ],

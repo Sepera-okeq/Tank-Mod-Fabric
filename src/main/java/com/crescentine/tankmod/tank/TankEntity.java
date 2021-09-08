@@ -1,6 +1,9 @@
 package com.crescentine.tankmod.tank;
 
 import com.crescentine.tankmod.TankMod;
+import com.crescentine.tankmod.shell.ShellEntity;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -36,6 +39,7 @@ public class TankEntity extends PigEntity implements IAnimatable {
     public TankEntity(EntityType<?> entityType, World world) {
         super((EntityType<? extends PigEntity>) entityType, world);
     }
+
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.tank.walking", true));
         return PlayState.CONTINUE;
@@ -48,22 +52,27 @@ public class TankEntity extends PigEntity implements IAnimatable {
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 10.0f)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 0);
     }
+
     @Override
     public boolean canWalkOnFluid(Fluid fluid) {
         return false;
     }
+
     @Override
     public boolean canBeRiddenInWater() {
         return false;
     }
+
     @Override
     protected int computeFallDamage(float fallDistance, float damageMultiplier) {
         return 0;
     }
+
     @Override
     public int getSafeFallDistance() {
         return 30;
     }
+
     @Override
     protected void removePassenger(Entity entity) {
         super.removePassenger(entity);
@@ -71,17 +80,17 @@ public class TankEntity extends PigEntity implements IAnimatable {
             player.setInvisible(false);
         }
     }
+
     @Override
     public boolean cannotDespawn() {
         return true;
     }
 
-   @Override
+    @Override
     public void registerControllers(AnimationData animationData) {
-    animationData.addAnimationController(new AnimationController<>(this,"controller",0,this::predicate));
+        animationData.addAnimationController(new AnimationController<>(this, "controller", 0, this::predicate));
 
     }
-
 
 
     @Override
@@ -93,6 +102,7 @@ public class TankEntity extends PigEntity implements IAnimatable {
     public Iterable<ItemStack> getArmorItems() {
         return Set.of();
     }
+
     @Override
     public ItemStack getEquippedStack(EquipmentSlot slot) {
         return ItemStack.EMPTY;
@@ -103,6 +113,7 @@ public class TankEntity extends PigEntity implements IAnimatable {
         this.goalSelector.clear();
         clearGoalsAndTasks();
     }
+
     @Override
     public boolean canBeControlledByRider() {
         return true;
@@ -110,8 +121,8 @@ public class TankEntity extends PigEntity implements IAnimatable {
 
     @Override
     protected boolean movesIndependently() {
-            return true;
-        }
+        return true;
+    }
 
     @Override
     public boolean canMoveVoluntarily() {
@@ -157,26 +168,32 @@ public class TankEntity extends PigEntity implements IAnimatable {
         }
         return ActionResult.FAIL;
     }
+
     @Override
     protected boolean isImmobile() {
         return false;
     }
+
     @Override
     protected SoundEvent getAmbientSound() {
         return SoundEvents.ENTITY_MINECART_RIDING;
     }
+
     @Override
     protected SoundEvent getDeathSound() {
         return SoundEvents.ENTITY_GENERIC_EXPLODE;
     }
+
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return SoundEvents.ITEM_ARMOR_EQUIP_IRON;
     }
+
     @Override
     protected SoundEvent getFallSound(int distance) {
         return null;
     }
+
     @Override
     protected SoundEvent getSplashSound() {
         return null;
@@ -187,4 +204,9 @@ public class TankEntity extends PigEntity implements IAnimatable {
         return null;
     }
 
+    public static void shoot(World world, LivingEntity user) {
+
+        if (user instanceof PlayerEntity) {
+        }
     }
+}
