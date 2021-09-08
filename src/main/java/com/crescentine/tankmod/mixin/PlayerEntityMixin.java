@@ -24,6 +24,7 @@ import software.bernie.example.registry.ItemRegistry;
 
 @Mixin(PlayerEntity.class)
 public class PlayerEntityMixin {
+
     @Nullable
     private Entity trajanstanks$vehicle;
     private ShellEntity trajanstanks$shellEntity;
