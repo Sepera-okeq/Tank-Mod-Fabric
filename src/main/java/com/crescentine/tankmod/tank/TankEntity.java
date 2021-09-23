@@ -41,8 +41,11 @@ public class TankEntity extends PigEntity implements IAnimatable {
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.tank.walking", true));
-        return PlayState.CONTINUE;
+        if (event.isMoving()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.tank.walking", true));
+            return PlayState.CONTINUE;
+        }
+        return PlayState.STOP;
     }
 
     public static DefaultAttributeContainer.Builder createTankAttributes() {
@@ -202,11 +205,5 @@ public class TankEntity extends PigEntity implements IAnimatable {
     @Override
     protected SoundEvent getSwimSound() {
         return null;
-    }
-
-    public static void shoot(World world, LivingEntity user) {
-
-        if (user instanceof PlayerEntity) {
-        }
     }
 }

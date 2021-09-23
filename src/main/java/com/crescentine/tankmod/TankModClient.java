@@ -4,20 +4,31 @@ import com.crescentine.tankmod.shell.ShellEntitySpawnPacket;
 import com.crescentine.tankmod.tank.TankEntityModel;
 import com.crescentine.tankmod.tank.TankEntityRenderer;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.fabricmc.fabric.impl.client.renderer.registry.EntityRendererRegistryImpl;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
+import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.UUID;
 
 public class TankModClient implements ClientModInitializer {
+    public static final KeyBinding STOPMOVING = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+            "key.tankmod.stopmoving", // The translation key of the keybinding's name
+            InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
+            GLFW.GLFW_KEY_RIGHT_CONTROL, // The keycode of the key
+            "category.tankmod.trajanstanks" // The translation key of the keybinding's category.
+    ));
+
     public void receiveEntityPacket() {
         ClientSidePacketRegistry.INSTANCE.register(PacketID, (ctx, byteBuf) -> {
             EntityType<?> et = Registry.ENTITY_TYPE.get(byteBuf.readVarInt());
@@ -51,5 +62,7 @@ public class TankModClient implements ClientModInitializer {
         receiveEntityPacket();
         EntityRendererRegistryImpl.INSTANCE.register(TankMod.TANK_ENTITY_TYPE, ctx ->
                 new TankEntityRenderer(ctx, new TankEntityModel()));
+
+
     }
 }
