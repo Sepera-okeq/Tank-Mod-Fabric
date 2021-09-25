@@ -1,6 +1,7 @@
 package com.crescentine.tankmod.tank;
 
 import com.crescentine.tankmod.TankMod;
+import com.crescentine.tankmod.TankModClient;
 import com.crescentine.tankmod.shell.ShellEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
@@ -116,10 +117,14 @@ public class TankEntity extends PigEntity implements IAnimatable {
         this.goalSelector.clear();
         clearGoalsAndTasks();
     }
+//Movement Related
 
     @Override
     public boolean canBeControlledByRider() {
-        return true;
+        if (TankModClient.STARTMOVING.isPressed()) {
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -131,6 +136,8 @@ public class TankEntity extends PigEntity implements IAnimatable {
     public boolean canMoveVoluntarily() {
         return true;
     }
+
+    //Movement Related ^
 
     @Override
     public void equipStack(EquipmentSlot slot, ItemStack stack) {

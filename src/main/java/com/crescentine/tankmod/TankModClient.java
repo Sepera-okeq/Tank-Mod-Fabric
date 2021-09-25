@@ -22,10 +22,10 @@ import org.lwjgl.glfw.GLFW;
 import java.util.UUID;
 
 public class TankModClient implements ClientModInitializer {
-    public static final KeyBinding STOPMOVING = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-            "key.tankmod.stopmoving", // The translation key of the keybinding's name
+    public static final KeyBinding STARTMOVING = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+            "key.tankmod.startmoving", // The translation key of the keybinding's name
             InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
-            GLFW.GLFW_KEY_RIGHT_CONTROL, // The keycode of the key
+            GLFW.GLFW_KEY_M, // The keycode of the key
             "category.tankmod.trajanstanks" // The translation key of the keybinding's category.
     ));
 
