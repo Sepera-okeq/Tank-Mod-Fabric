@@ -3,6 +3,6 @@
   "item.trajanstanks.tank_controller": "Tank Steering Wheel",
   "item.trajanstanks.netherite_wheel": "Netherite Enforced Leather Wheel",
   "itemGroup.trajanstanks.tanks_groups": "Trajan's Tanks",
-  "key.tankmod.stopmoving" : "Tank Brakes",
-  "category.tankmod.trajanstanks" : "Tank Mod",
+  "key.tankmod.startmoving" : "Forward",
+  "category.tankmod.trajanstanks" : "Tank Mod"
 }

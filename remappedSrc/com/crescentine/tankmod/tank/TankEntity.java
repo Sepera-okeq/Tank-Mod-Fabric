@@ -1,27 +1,27 @@
 package com.crescentine.tankmod.tank;
 
 import com.crescentine.tankmod.TankMod;
+import com.crescentine.tankmod.TankModClient;
+import com.crescentine.tankmod.shell.ShellEntity;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.*;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.animal.Pig;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.entity.passive.PigEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Arm;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -34,40 +34,49 @@ import java.util.Set;
 
 @SuppressWarnings("EntityConstructor")
 
-public class TankEntity extends Pig implements IAnimatable {
+public class TankEntity extends PigEntity implements IAnimatable {
     private final AnimationFactory factory = new AnimationFactory(this);
 
-    public TankEntity(EntityType<?> entityType, Level world) {
-        super((EntityType<? extends Pig>) entityType, world);
-    }
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.tank.walking", true));
-        return PlayState.CONTINUE;
+    public TankEntity(EntityType<?> entityType, World world) {
+        super((EntityType<? extends PigEntity>) entityType, world);
     }
 
-    public static AttributeSupplier.Builder createTankAttributes() {
+    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        if (event.isMoving()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.tank.walking", true));
+            return PlayState.CONTINUE;
+        }
+        return PlayState.STOP;
+    }
+
+    public static DefaultAttributeContainer.Builder createTankAttributes() {
         return LivingEntity.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 70f)
-                .add(Attributes.MOVEMENT_SPEED, 0.1f)
-                .add(Attributes.KNOCKBACK_RESISTANCE, 10.0f)
-                .add(Attributes.FOLLOW_RANGE, 0);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 70f)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.1f)
+                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 10.0f)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 0);
     }
+
     @Override
-    public boolean canStandOnFluid(Fluid fluid) {
+    public boolean canWalkOnFluid(Fluid fluid) {
         return false;
     }
+
     @Override
-    public boolean rideableUnderWater() {
+    public boolean canBeRiddenInWater() {
         return false;
     }
+
     @Override
-    protected int calculateFallDamage(float fallDistance, float damageMultiplier) {
+    protected int computeFallDamage(float fallDistance, float damageMultiplier) {
         return 0;
     }
+
     @Override
-    public int getMaxFallDistance() {
+    public int getSafeFallDistance() {
         return 30;
     }
+
     @Override
     protected void removePassenger(Entity entity) {
         super.removePassenger(entity);
@@ -75,17 +84,17 @@ public class TankEntity extends Pig implements IAnimatable {
             player.setInvisible(false);
         }
     }
+
     @Override
-    public boolean requiresCustomPersistence() {
+    public boolean cannotDespawn() {
         return true;
     }
 
-   @Override
+    @Override
     public void registerControllers(AnimationData animationData) {
-    animationData.addAnimationController(new AnimationController<>(this,"controller",0,this::predicate));
+        animationData.addAnimationController(new AnimationController<>(this, "controller", 0, this::predicate));
 
     }
-
 
 
     @Override
@@ -94,45 +103,53 @@ public class TankEntity extends Pig implements IAnimatable {
     }
 
     @Override
-    public Iterable<ItemStack> getArmorSlots() {
+    public Iterable<ItemStack> getArmorItems() {
         return Set.of();
     }
+
     @Override
-    public ItemStack getItemBySlot(EquipmentSlot slot) {
+    public ItemStack getEquippedStack(EquipmentSlot slot) {
         return ItemStack.EMPTY;
     }
 
     @Override
-    protected void registerGoals() {
-        this.goalSelector.removeAllGoals();
-        removeFreeWill();
+    protected void initGoals() {
+        this.goalSelector.clear();
+        clearGoalsAndTasks();
     }
+//Movement Related
+
     @Override
     public boolean canBeControlledByRider() {
-        return true;
-    }
-
-    @Override
-    protected boolean shouldPassengersInheritMalus() {
+        if (TankModClient.STARTMOVING.isPressed()) {
             return true;
         }
+        return false;
+    }
 
     @Override
-    public boolean isEffectiveAi() {
+    protected boolean movesIndependently() {
         return true;
     }
 
     @Override
-    public void setItemSlot(EquipmentSlot slot, ItemStack stack) {
+    public boolean canMoveVoluntarily() {
+        return true;
+    }
+
+    //Movement Related ^
+
+    @Override
+    public void equipStack(EquipmentSlot slot, ItemStack stack) {
     }
 
     @Override
-    public HumanoidArm getMainArm() {
-        return HumanoidArm.LEFT;
+    public Arm getMainArm() {
+        return Arm.LEFT;
     }
 
     @Override
-    public float getSteeringSpeed() {
+    public float getSaddledSpeed() {
         return 0.15f;
     }
 
@@ -148,41 +165,47 @@ public class TankEntity extends Pig implements IAnimatable {
     }
 
     @Override
-    public Pig getBreedOffspring(ServerLevel serverWorld, AgeableMob passiveEntity) {
+    public PigEntity createChild(ServerWorld serverWorld, PassiveEntity passiveEntity) {
         return null;
     }
 
     @Override
-    public InteractionResult interactAt(Player player, Vec3 hitPos, InteractionHand hand) {
-        if (!player.getCommandSenderWorld().isClientSide && player.getItemInHand(hand).getItem() == TankMod.TANK_CONTROLLER) {
+    public ActionResult interactAt(PlayerEntity player, Vec3d hitPos, Hand hand) {
+        if (!player.getEntityWorld().isClient && player.getStackInHand(hand).getItem() == TankMod.TANK_CONTROLLER) {
             player.startRiding(this, true);
             player.setInvisible(true);
-            return InteractionResult.SUCCESS;
+            return ActionResult.SUCCESS;
         }
-        return InteractionResult.FAIL;
+        return ActionResult.FAIL;
     }
+
     @Override
     protected boolean isImmobile() {
         return false;
     }
+
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.MINECART_RIDING;
+        return SoundEvents.ENTITY_MINECART_RIDING;
     }
+
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.GENERIC_EXPLODE;
+        return SoundEvents.ENTITY_GENERIC_EXPLODE;
     }
+
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ARMOR_EQUIP_IRON;
+        return SoundEvents.ITEM_ARMOR_EQUIP_IRON;
     }
+
     @Override
-    protected SoundEvent getFallDamageSound(int distance) {
+    protected SoundEvent getFallSound(int distance) {
         return null;
     }
+
     @Override
-    protected SoundEvent getSwimSplashSound() {
+    protected SoundEvent getSplashSound() {
         return null;
     }
 
@@ -190,5 +213,4 @@ public class TankEntity extends Pig implements IAnimatable {
     protected SoundEvent getSwimSound() {
         return null;
     }
-
-    }
+}

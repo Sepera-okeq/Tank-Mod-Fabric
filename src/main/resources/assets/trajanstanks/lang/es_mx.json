@@ -1,0 +1,8 @@
+{
+  "item.trajanstanks.tank_item": "Tanque",
+  "item.trajanstanks.tank_controller": "Volante de Tanque",
+  "item.trajanstanks.netherite_wheel": "Rueda de Cuero reforzada de inframundita",
+  "itemGroup.trajanstanks.tanks_groups": "Tanques de Trajan",
+  "key.tankmod.startmoving" : "Tecla para Movimiento del Tanque",
+  "category.tankmod.trajanstanks" : "Mod de Tanques"
+}

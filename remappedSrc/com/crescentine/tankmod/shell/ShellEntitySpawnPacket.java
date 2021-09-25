@@ -2,26 +2,26 @@ package com.crescentine.tankmod.shell;
 
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.core.Registry;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.entity.Entity;
+import net.minecraft.network.Packet;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.registry.Registry;
 
 public class ShellEntitySpawnPacket {
-    public static Packet<?> create(Entity e, ResourceLocation packetID) {
-        if (e.level.isClientSide)
+    public static Packet<?> create(Entity e, Identifier packetID) {
+        if (e.world.isClient)
             throw new IllegalStateException("SpawnPacketUtil.create called on the logical client!");
-        FriendlyByteBuf byteBuf = new FriendlyByteBuf(Unpooled.buffer());
-        byteBuf.writeVarInt(Registry.ENTITY_TYPE.getId(e.getType()));
-        byteBuf.writeUUID(e.getUUID());
+        PacketByteBuf byteBuf = new PacketByteBuf(Unpooled.buffer());
+        byteBuf.writeVarInt(Registry.ENTITY_TYPE.getRawId(e.getType()));
+        byteBuf.writeUuid(e.getUuid());
         byteBuf.writeVarInt(e.getId());
 
-        PacketBufUtil.writeVec3d(byteBuf, e.position());
-        PacketBufUtil.writeAngle(byteBuf, e.getXRot());
-        PacketBufUtil.writeAngle(byteBuf, e.getYRot());
+        PacketBufUtil.writeVec3d(byteBuf, e.getPos());
+        PacketBufUtil.writeAngle(byteBuf, e.getPitch());
+        PacketBufUtil.writeAngle(byteBuf, e.getYaw());
         return ServerPlayNetworking.createS2CPacket(packetID, byteBuf);
     }
     public static final class PacketBufUtil {
@@ -34,7 +34,7 @@ public class ShellEntitySpawnPacket {
          * @return packed angle
          */
         public static byte packAngle(float angle) {
-            return (byte) Mth.floor(angle * 256 / 360);
+            return (byte) MathHelper.floor(angle * 256 / 360);
         }
 
         /**
@@ -49,38 +49,38 @@ public class ShellEntitySpawnPacket {
         }
 
         /**
-         * Writes an angle to a {@link FriendlyByteBuf}.
+         * Writes an angle to a {@link PacketByteBuf}.
          *
          * @param byteBuf
          *         destination buffer
          * @param angle
          *         angle
          */
-        public static void writeAngle(FriendlyByteBuf byteBuf, float angle) {
+        public static void writeAngle(PacketByteBuf byteBuf, float angle) {
             byteBuf.writeByte(packAngle(angle));
         }
 
         /**
-         * Reads an angle from a {@link FriendlyByteBuf}.
+         * Reads an angle from a {@link PacketByteBuf}.
          *
          * @param byteBuf
          *         source buffer
          * @return angle
          */
-        public static float readAngle(FriendlyByteBuf byteBuf) {
+        public static float readAngle(PacketByteBuf byteBuf) {
             return unpackAngle(byteBuf.readByte());
         }
-        public static void writeVec3d(FriendlyByteBuf byteBuf, Vec3 vec3d) {
+        public static void writeVec3d(PacketByteBuf byteBuf, Vec3d vec3d) {
             byteBuf.writeDouble(vec3d.x);
             byteBuf.writeDouble(vec3d.y);
             byteBuf.writeDouble(vec3d.z);
         }
 
-        public static Vec3 readVec3d(FriendlyByteBuf byteBuf) {
+        public static Vec3d readVec3d(PacketByteBuf byteBuf) {
             double x = byteBuf.readDouble();
             double y = byteBuf.readDouble();
             double z = byteBuf.readDouble();
-            return new Vec3(x, y, z);
+            return new Vec3d(x, y, z);
         }
     }
 }
