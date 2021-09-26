@@ -17,11 +17,11 @@ public class ShellEntitySpawnPacket {
         PacketByteBuf byteBuf = new PacketByteBuf(Unpooled.buffer());
         byteBuf.writeVarInt(Registry.ENTITY_TYPE.getRawId(e.getType()));
         byteBuf.writeUuid(e.getUuid());
-        byteBuf.writeVarInt(e.getId());
+        byteBuf.writeVarInt(e.getEntityId());
 
         PacketBufUtil.writeVec3d(byteBuf, e.getPos());
-        PacketBufUtil.writeAngle(byteBuf, e.getPitch());
-        PacketBufUtil.writeAngle(byteBuf, e.getYaw());
+        PacketBufUtil.writeAngle(byteBuf, e.Pitch());
+        PacketBufUtil.writeAngle(byteBuf, e.Yaw());
         return ServerPlayNetworking.createS2CPacket(packetID, byteBuf);
     }
     public static final class PacketBufUtil {

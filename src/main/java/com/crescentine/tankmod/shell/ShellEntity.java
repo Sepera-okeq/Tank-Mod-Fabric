@@ -81,7 +81,7 @@ public class ShellEntity extends ThrownItemEntity {
             this.world.sendEntityStatus(this, (byte) 3); // particle?
             if (!world.isClient) {
                 world.createExplosion(this, getX(), getY(), getZ(), 2, Explosion.DestructionType.BREAK);
-                this.discard();
+                this.kill();
             }
         }
     }
