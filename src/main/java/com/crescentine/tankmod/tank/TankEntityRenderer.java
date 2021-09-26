@@ -1,14 +1,17 @@
 package com.crescentine.tankmod.tank;
 
 import com.crescentine.tankmod.tank.TankEntity;
-import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+import software.bernie.geckolib3.renderer.geo.GeoEntityRenderer;
 
-public class TankEntityRenderer extends GeoEntityRenderer<TankEntity> {
-        public TankEntityRenderer(EntityRendererFactory.Context ctx, AnimatedGeoModel<TankEntity> modelProvider) {
-            super(ctx, modelProvider);
-
-            this.shadowRadius = .5f;
-        }
+public class TankEntityRenderer extends GeoEntityRenderer<TankEntity>
+{
+    public TankEntityRenderer(EntityRenderDispatcher renderManager)
+    {
+        super(renderManager, new TankEntityModel());
+        this.shadowRadius = 0.5F; //change 0.7 to the desired shadow size.
+    }
 }
+
+/* */
