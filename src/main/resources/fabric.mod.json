@@ -4,16 +4,16 @@
   "version": "${version}",
 
   "name": "Tank Mod 1.16.5 Backport",
-  "description": "Mod for 1.17 Fabric (and other versions) adding working Tanks to Minecraft",
+  "description": "Mod for 1.16 Fabric (and other versions) adding working Tanks to Minecraft",
   "authors": [
     "Crescentine/Trajan"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/trajans-tanks-fabric-wip",
+    "sources": "https://github.com/Crescentine/Tank-Mod-1.17.1"
   },
 
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/modid/icon.png",
 
   "environment": "*",
@@ -38,6 +38,5 @@
     "java": ">=16"
   },
   "suggests": {
-    "another-mod": "*"
   }
 }
