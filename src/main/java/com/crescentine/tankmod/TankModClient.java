@@ -1,6 +1,8 @@
 package com.crescentine.tankmod;
 
+import com.crescentine.tankmod.shell.ShellEntity;
 import com.crescentine.tankmod.shell.ShellEntitySpawnPacket;
+import com.crescentine.tankmod.tank.TankEntity;
 import com.crescentine.tankmod.tank.TankEntityModel;
 import com.crescentine.tankmod.tank.TankEntityRenderer;
 import net.fabricmc.api.ClientModInitializer;
@@ -44,9 +46,9 @@ public class TankModClient implements ClientModInitializer {
                     throw new IllegalStateException("Failed to create instance of entity \"" + Registry.ENTITY_TYPE.getId(et) + "\"!");
                 e.updateTrackedPosition(pos);
                 e.setPos(pos.x, pos.y, pos.z);
-                e.setPitch(pitch);
-                e.setYaw(yaw);
-                e.setId(entityId);
+                e.pitch = pitch;
+                e.yaw = yaw;
+                e.setEntityId(entityId);
                 e.setUuid(uuid);
                 MinecraftClient.getInstance().world.addEntity(entityId, e);
             });
@@ -56,11 +58,10 @@ public class TankModClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        EntityRendererRegistry.INSTANCE.register(TankMod.ShellEntityType, (context) ->
-                new FlyingItemEntityRenderer(context));
+        EntityRendererRegistry.INSTANCE.register(TankMod.ShellEntityType, (dispatcher, context) -> new FlyingItemEntityRenderer<>(dispatcher, context.getItemRenderer()));
         receiveEntityPacket();
-        EntityRendererRegistry.INSTANCE.register(TankMod.TANK_ENTITY_TYPE, ctx ->
-                new TankEntityRenderer(ctx, new TankEntityModel()));
+        EntityRendererRegistry.INSTANCE.register(TankMod.TANK_ENTITY_TYPE, (dispatcher,ctx) ->
+                new TankEntityRenderer(dispatcher, new TankEntityModel()));
 
     }
 }

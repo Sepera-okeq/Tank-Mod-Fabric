@@ -20,8 +20,8 @@ public class ShellEntitySpawnPacket {
         byteBuf.writeVarInt(e.getEntityId());
 
         PacketBufUtil.writeVec3d(byteBuf, e.getPos());
-        PacketBufUtil.writeAngle(byteBuf, e.Pitch());
-        PacketBufUtil.writeAngle(byteBuf, e.Yaw());
+        PacketBufUtil.writeAngle(byteBuf, e.pitch);
+        PacketBufUtil.writeAngle(byteBuf, e.yaw);
         return ServerPlayNetworking.createS2CPacket(packetID, byteBuf);
     }
     public static final class PacketBufUtil {

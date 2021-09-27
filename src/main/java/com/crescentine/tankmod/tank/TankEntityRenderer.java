@@ -5,12 +5,11 @@ import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 import software.bernie.geckolib3.renderer.geo.GeoEntityRenderer;
 
-public class TankEntityRenderer extends GeoEntityRenderer<TankEntity>
-{
-    public TankEntityRenderer(EntityRenderDispatcher renderManager)
-    {
-        super(renderManager, new TankEntityModel());
-        this.shadowRadius = 0.5F; //change 0.7 to the desired shadow size.
+
+public class TankEntityRenderer extends GeoEntityRenderer<TankEntity>  {
+    public TankEntityRenderer(EntityRenderDispatcher ctx, AnimatedGeoModel<TankEntity> modelProvider) {
+        super(ctx, modelProvider);
+        this.shadowRadius=.5f;
     }
 }
 

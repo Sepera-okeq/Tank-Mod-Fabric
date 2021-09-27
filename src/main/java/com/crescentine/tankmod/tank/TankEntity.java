@@ -84,6 +84,9 @@ public class TankEntity extends PigEntity implements IAnimatable {
             player.setInvisible(false);
         }
     }
+    @Override
+    protected void initGoals() {
+    }
 
     @Override
     public boolean cannotDespawn() {
@@ -112,12 +115,7 @@ public class TankEntity extends PigEntity implements IAnimatable {
         return ItemStack.EMPTY;
     }
 
-    @Override
-    protected void initGoals() {
-        this.goalSelector.clear();
-        clearGoalsAndTasks();
-    }
-//Movement Related
+    //Movement Related
 
     @Override
     public boolean canBeControlledByRider() {
