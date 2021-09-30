@@ -1,6 +1,6 @@
 # Trajan's Tanks (Fabric) 1.17
 
-Careful, this mod is an alpha. Right now there is no shooting in the release version, but there will soon be.
+Careful, this mod is an alpha.
 
 ## Setup
 
