@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " n ",
+    "nRn",
+    " F "
+  ],
+  "key": {
+    "n": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "R": {
+      "item": "minecraft:tnt"
+    },
+    "F": {
+      "item": "minecraft:netherite_ingot"
+    }
+  },
+  "result": {
+    "item": "trajanstanks:shell_item",
+    "count": 5
+  }
+}

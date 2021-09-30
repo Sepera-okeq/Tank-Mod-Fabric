@@ -6,6 +6,7 @@ import com.crescentine.tankmod.tank.TankEntity;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.EntityDimensions;
@@ -52,7 +53,16 @@ public class TankMod implements ModInitializer {
 		Registry.register(Registry.ITEM, new Identifier("trajanstanks", "tank_item"), TANK_ITEM);
 		Registry.register(Registry.ITEM, new Identifier("trajanstanks", "netherite_wheel"), NETHERITE_WHEEL);
 
+		ServerPlayNetworking.registerGlobalReceiver(new Identifier("shoot"), (server, player, handler, buf, sender) -> {
 
+			if(player.getVehicle() instanceof TankEntity) {
+
+				TankEntity tank = (TankEntity) player.getVehicle();
+				tank.shoot(player);
+
+			}
+
+		});
 
 	}
 }
