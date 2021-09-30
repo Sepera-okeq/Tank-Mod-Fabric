@@ -4,9 +4,12 @@ import com.crescentine.tankmod.shell.ShellEntitySpawnPacket;
 import com.crescentine.tankmod.tank.TankEntityModel;
 import com.crescentine.tankmod.tank.TankEntityRenderer;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
@@ -27,6 +30,15 @@ public class TankModClient implements ClientModInitializer {
             GLFW.GLFW_KEY_M, // The keycode of the key
             "category.tankmod.trajanstanks" // The translation key of the keybinding's category.
     ));
+
+    public static final KeyBinding SHOOT = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+            "key.tankmod.shoot", // The translation key of the keybinding's name
+            InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
+            GLFW.GLFW_KEY_RIGHT_ALT, // The keycode of the key
+            "category.tankmod.trajanstanks" // The translation key of the keybinding's category.
+    ));
+
+
 
     public void receiveEntityPacket() {
         ClientSidePacketRegistry.INSTANCE.register(PacketID, (ctx, byteBuf) -> {
@@ -61,6 +73,11 @@ public class TankModClient implements ClientModInitializer {
         receiveEntityPacket();
         EntityRendererRegistry.INSTANCE.register(TankMod.TANK_ENTITY_TYPE, ctx ->
                 new TankEntityRenderer(ctx, new TankEntityModel()));
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            while (SHOOT.wasPressed()) {
+                ClientPlayNetworking.send(new Identifier("shoot"), PacketByteBufs.empty());
+            }
+        });
 
     }
 }

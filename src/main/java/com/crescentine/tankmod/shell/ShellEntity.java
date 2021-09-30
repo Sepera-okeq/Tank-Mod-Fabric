@@ -80,7 +80,7 @@ public class ShellEntity extends ThrownItemEntity {
         if (!this.world.isClient) { // checks if the world is client
             this.world.sendEntityStatus(this, (byte) 3); // particle?
             if (!world.isClient) {
-                world.createExplosion(this, getX(), getY(), getZ(), 2, Explosion.DestructionType.BREAK);
+                world.createExplosion(this, getX(), getY(), getZ(), 4, Explosion.DestructionType.DESTROY);
                 this.discard();
             }
         }
