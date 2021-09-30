@@ -25,6 +25,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 
+@SuppressWarnings("EntityConstructor")
 public class ShellEntity extends ThrownItemEntity {
     public ShellEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
         super(entityType, world);

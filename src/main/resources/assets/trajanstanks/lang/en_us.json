@@ -4,5 +4,7 @@
   "item.trajanstanks.netherite_wheel": "Netherite Enforced Leather Wheel",
   "itemGroup.trajanstanks.tanks_groups": "Trajan's Tanks",
   "key.tankmod.startmoving" : "Forward",
-  "category.tankmod.trajanstanks" : "Tank Mod"
+  "category.tankmod.trajanstanks" : "Tank Mod",
+  "key.tankmod.shoot" : "Fire!",
+  "item.trajanstanks.shell_item" : "Tank Ammo"
 }
