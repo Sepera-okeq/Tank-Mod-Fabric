@@ -1,8 +1,10 @@
-package com.crescentine.tankmod;
+package com.crescentine.trajanstanks.client;
 
-import com.crescentine.tankmod.shell.ShellEntitySpawnPacket;
-import com.crescentine.tankmod.tank.TankEntityModel;
-import com.crescentine.tankmod.tank.TankEntityRenderer;
+import com.crescentine.trajanstanks.common.network.packet.ShellEntitySpawnPacket;
+import com.crescentine.trajanstanks.common.registry.ModEntityTypes;
+import com.crescentine.trajanstanks.client.model.TankEntityModel;
+import com.crescentine.trajanstanks.client.renderer.TankEntityRenderer;
+import com.crescentine.trajanstanks.common.TankMod;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -68,10 +70,9 @@ public class TankModClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        EntityRendererRegistry.INSTANCE.register(TankMod.ShellEntityType, (context) ->
-                new FlyingItemEntityRenderer(context));
+        EntityRendererRegistry.INSTANCE.register(ModEntityTypes.SHELL_ENTITY_TYPE, FlyingItemEntityRenderer::new);
         receiveEntityPacket();
-        EntityRendererRegistry.INSTANCE.register(TankMod.TANK_ENTITY_TYPE, ctx ->
+        EntityRendererRegistry.INSTANCE.register(ModEntityTypes.TANK_ENTITY_TYPE, ctx ->
                 new TankEntityRenderer(ctx, new TankEntityModel()));
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (SHOOT.wasPressed()) {

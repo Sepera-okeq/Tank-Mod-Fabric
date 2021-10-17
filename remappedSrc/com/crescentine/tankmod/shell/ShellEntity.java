@@ -1,7 +1,7 @@
-package com.crescentine.tankmod.shell;
+package com.crescentine.trajanstanks.tankmod.shell;
 
-import com.crescentine.tankmod.TankMod;
-import com.crescentine.tankmod.TankModClient;
+import com.crescentine.trajanstanks.tankmod.TankMod;
+import com.crescentine.trajanstanks.tankmod.TankModClient;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.Entity;

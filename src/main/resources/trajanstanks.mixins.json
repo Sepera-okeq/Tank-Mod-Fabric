@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.crescentine.tankmod.mixin",
+  "package": "com.crescentine.trajanstanks.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
   ],

@@ -1,8 +1,8 @@
-package com.crescentine.tankmod.tank;
+package com.crescentine.trajanstanks.common.tank;
 
-import com.crescentine.tankmod.TankMod;
-import com.crescentine.tankmod.TankModClient;
-import com.crescentine.tankmod.shell.ShellEntity;
+import com.crescentine.trajanstanks.tankmod.TankMod;
+import com.crescentine.trajanstanks.tankmod.TankModClient;
+import com.crescentine.trajanstanks.tankmod.shell.ShellEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.*;

@@ -1,7 +1,9 @@
-package com.crescentine.tankmod.shell;
+package com.crescentine.trajanstanks.common.entity.projectile;
 
-import com.crescentine.tankmod.TankMod;
-import com.crescentine.tankmod.TankModClient;
+import com.crescentine.trajanstanks.client.TankModClient;
+import com.crescentine.trajanstanks.common.registry.ModEntityTypes;
+import com.crescentine.trajanstanks.common.registry.ModObjects;
+import com.crescentine.trajanstanks.common.network.packet.ShellEntitySpawnPacket;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.Entity;
@@ -10,8 +12,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.mob.BlazeEntity;
-import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -27,18 +27,21 @@ import net.minecraft.world.explosion.Explosion;
 
 @SuppressWarnings("EntityConstructor")
 public class ShellEntity extends ThrownItemEntity {
+
     public ShellEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
         super(entityType, world);
     }
+
     public ShellEntity(World world, LivingEntity owner) {
-        super(TankMod.ShellEntityType, owner, world);
+        super(ModEntityTypes.SHELL_ENTITY_TYPE, owner, world);
     }
+
     public ShellEntity(World world, double x, double y, double z) {
-        super(TankMod.ShellEntityType, x, y, z, world);
+        super(ModEntityTypes.SHELL_ENTITY_TYPE, x, y, z, world);
     }
     @Override
     protected Item getDefaultItem() {
-        return TankMod.ShellEntityItem;
+        return ModObjects.SHELL_ITEM;
     }
     @Override
     public Packet createSpawnPacket() {

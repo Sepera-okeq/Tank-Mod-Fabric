@@ -1,8 +1,8 @@
-package com.crescentine.tankmod;
+package com.crescentine.trajanstanks.tankmod;
 
-import com.crescentine.tankmod.shell.ShellEntity;
-import com.crescentine.tankmod.shell.ShellItem;
-import com.crescentine.tankmod.tank.TankEntity;
+import com.crescentine.trajanstanks.tankmod.shell.ShellEntity;
+import com.crescentine.trajanstanks.tankmod.shell.ShellItem;
+import com.crescentine.trajanstanks.common.tank.TankEntity;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
