@@ -19,10 +19,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.crescentine.trajanstanks.TankMod"
+      "com.crescentine.trajanstanks.common.TankMod"
     ],
     "client": [
-      "com.crescentine.trajanstanks.TankModClient"
+      "com.crescentine.trajanstanks.client.TankModClient"
     ]
   },
   "mixins": [

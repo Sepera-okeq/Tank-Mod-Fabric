@@ -1,4 +1,4 @@
-package com.crescentine.tankmod.shell;
+package com.crescentine.trajanstanks.tankmod.shell;
 
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;

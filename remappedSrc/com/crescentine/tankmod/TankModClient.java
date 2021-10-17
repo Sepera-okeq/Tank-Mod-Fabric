@@ -1,8 +1,8 @@
-package com.crescentine.tankmod;
+package com.crescentine.trajanstanks.tankmod;
 
-import com.crescentine.tankmod.shell.ShellEntitySpawnPacket;
-import com.crescentine.tankmod.tank.TankEntityModel;
-import com.crescentine.tankmod.tank.TankEntityRenderer;
+import com.crescentine.trajanstanks.tankmod.shell.ShellEntitySpawnPacket;
+import com.crescentine.trajanstanks.common.tank.TankEntityModel;
+import com.crescentine.trajanstanks.common.tank.TankEntityRenderer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;

@@ -1,6 +1,7 @@
-package com.crescentine.tankmod.tank;
-import com.crescentine.tankmod.TankMod;
-import com.crescentine.tankmod.tank.TankEntity;
+package com.crescentine.trajanstanks.client.model;
+
+import com.crescentine.trajanstanks.common.TankMod;
+import com.crescentine.trajanstanks.common.entity.TankEntity;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 

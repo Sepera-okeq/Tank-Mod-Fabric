@@ -1,10 +1,8 @@
-package com.crescentine.tankmod.tank;
+package com.crescentine.trajanstanks.common.entity;
 
-import com.crescentine.tankmod.TankMod;
-import com.crescentine.tankmod.TankModClient;
-import com.crescentine.tankmod.shell.ShellEntity;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
+import com.crescentine.trajanstanks.client.TankModClient;
+import com.crescentine.trajanstanks.common.registry.ModObjects;
+import com.crescentine.trajanstanks.common.entity.projectile.ShellEntity;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -180,7 +178,7 @@ public class TankEntity extends PigEntity implements IAnimatable {
 
     @Override
     public ActionResult interactAt(PlayerEntity player, Vec3d hitPos, Hand hand) {
-        if (!player.getEntityWorld().isClient && player.getStackInHand(hand).getItem() == TankMod.TANK_CONTROLLER) {
+        if (!player.getEntityWorld().isClient && player.getStackInHand(hand).getItem() == ModObjects.TANK_CONTROLLER) {
             player.startRiding(this, true);
             player.setInvisible(true);
             return ActionResult.SUCCESS;
@@ -234,7 +232,7 @@ public class TankEntity extends PigEntity implements IAnimatable {
 
         PlayerInventory inv = player.getInventory();
 
-        int slot = inv.getSlotWithStack(new ItemStack(TankMod.ShellEntityItem));
+        int slot = inv.getSlotWithStack(new ItemStack(ModObjects.SHELL_ITEM));
 
         if(slot == -1) {
             player.sendMessage(new LiteralText("§cYou don't have any ammo !"), true);
