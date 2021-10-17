@@ -69,7 +69,7 @@ public class ShellEntity extends ThrownItemEntity {
     protected void onEntityHit(EntityHitResult entityHitResult) { // called on entity hit.
         super.onEntityHit(entityHitResult);
         Entity entity = entityHitResult.getEntity(); // sets a new Entity instance as the EntityHitResult (victim)
-        int i = entity instanceof LivingEntity ? 50 : 0; // sets i to 3 if the Entity instance is an instance of BlazeEntity
+        int i = entity instanceof LivingEntity ? 75 : 0; // sets i to 3 if the Entity instance is an instance of BlazeEntity
         entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), (float) i); // deals damage
 
         if (entity instanceof LivingEntity) {

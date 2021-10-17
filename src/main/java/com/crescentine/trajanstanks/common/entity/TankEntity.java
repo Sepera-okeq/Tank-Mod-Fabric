@@ -208,17 +208,17 @@ public class TankEntity extends PigEntity implements IAnimatable {
 
     @Override
     protected SoundEvent getFallSound(int distance) {
-        return null;
+        return SoundEvents.BLOCK_ANVIL_LAND;
     }
 
     @Override
     protected SoundEvent getSplashSound() {
-        return null;
+        return SoundEvents.ENTITY_GENERIC_SPLASH;
     }
 
     @Override
     protected SoundEvent getSwimSound() {
-        return null;
+        return SoundEvents.ENTITY_GENERIC_SWIM;
     }
     public void tick() {
 
